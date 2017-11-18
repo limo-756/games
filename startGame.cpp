@@ -155,6 +155,45 @@ void printMatrix(int matrix[3][3])
         cout << endl;
     }
 }
+int checkEntry(int *head,int incrementer,int noUse)
+{
+    if((*head == PLAYER || *head == SPACE) && (*(head + incrementer) == PLAYER || *(head + incrementer) == SPACE)\
+     && (*(head + 2*incrementer) == PLAYER || *(head + 2*incrementer) == SPACE))
+        return 1;
+    else if((*head == COMPUTER || *head == SPACE) && (*(head + incrementer) == COMPUTER || *(head + incrementer) == SPACE)\
+     && (*(head + 2*incrementer) == COMPUTER || *(head + 2*incrementer) == SPACE))
+        return 1;
+    else
+        return 0;
+}
+bool noOneCanWin(int *matrix)
+{
+    int status = 0;
+    int noUse = 5;
+    if( checkEntry(&matrix[0], ROW, noUse) )
+        status = checkEntry(&matrix[0], ROW, noUse);
+    else if( checkEntry(&matrix[3], ROW, noUse) )
+        status = checkEntry(&matrix[3], ROW, noUse);
+    else if( checkEntry(&matrix[6], ROW, noUse) )
+        status = checkEntry(&matrix[6], ROW, noUse);
+    else if( checkEntry(&matrix[0], COL, noUse) )
+        status = checkEntry(&matrix[0], COL, noUse);
+    else if( checkEntry(&matrix[1], COL, noUse) )
+        status = checkEntry(&matrix[1], COL, noUse);
+    else if( checkEntry(&matrix[2], COL, noUse) )
+        status = checkEntry(&matrix[2], COL, noUse);
+    else if( checkEntry(&matrix[0], D1, noUse) )
+        status = checkEntry(&matrix[0], D1, noUse);
+    else if( checkEntry(&matrix[2], D2, noUse) )
+        status = checkEntry(&matrix[2], D2, noUse);
+    if(status == 0)
+    {
+        gameStatus = DRAW;
+        return true;
+    }
+    else
+        return false;
+}
 int main(int argc, char const *argv[])
 {
     cout << "This is tic tac toe game created by Anurag Sharma" << endl;
@@ -173,7 +212,7 @@ int main(int argc, char const *argv[])
     for (int i = 0; i < 3; ++i)
         for (int j = 0; j < 3; ++j)
             matrix[i][j] = SPACE;
-    while(!gameOver(&matrix[0][0]))
+    while(!gameOver(&matrix[0][0]) && !noOneCanWin(&matrix[0][0]))
     {
         if(chance)
         {
