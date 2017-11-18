@@ -138,8 +138,14 @@ void computerTurn(int matrix[3][3])
     matrix[turn.first][turn.second] = COMPUTER;
     gameStatus = DRAW;
 }
-void printMatrix(int matrix[3][3])
+void printMatrix(int matrix[3][3], bool compStartedFirst)
 {
+    int playerSymbol = 1,compSymbol = 0;
+    if(compStartedFirst)
+    {
+        playerSymbol = 0;
+        compSymbol = 1;
+    }
     cout << "-----------------------------------------" << endl;
     for (int i = 0; i < 3; ++i)
     {
@@ -148,9 +154,9 @@ void printMatrix(int matrix[3][3])
             if(matrix[i][j] == SPACE)
                 cout << "_ ";
             else if(matrix[i][j] == COMPUTER)
-                cout << "0 ";
+                cout << compSymbol <<" ";
             else if(matrix[i][j] == PLAYER)
-                cout << "1 ";
+                cout << playerSymbol <<" ";
         }
         cout << endl;
     }
@@ -199,6 +205,7 @@ int main(int argc, char const *argv[])
     cout << "This is tic tac toe game created by Anurag Sharma" << endl;
     string choice;
     bool chance;
+    bool compStartedFirst = false;
     do
     {
         cout << "Do you want to play first y|Y for Yes n|N for No" << endl;
@@ -207,7 +214,10 @@ int main(int argc, char const *argv[])
     if(choice == "Y" || choice == "y")
         chance = false;
     else
+    {
+        compStartedFirst = true;
         chance = true;
+    }
     int matrix[3][3];
     for (int i = 0; i < 3; ++i)
         for (int j = 0; j < 3; ++j)
@@ -243,7 +253,7 @@ int main(int argc, char const *argv[])
             matrix[x][y] = PLAYER;
             chance = true;
         }
-        printMatrix(matrix);
+        printMatrix(matrix, compStartedFirst);
     }
     if(gameStatus == DRAW)
         cout << "Match is a draw" << endl;
