@@ -84,12 +84,12 @@ int minMaxAlgo(int depth,int spaceNum,int *head,bool computer)
                         compY = i%3;
                     }
                     head[i] = SPACE;
-                    if(depth != 0 && val == COMPUTER)
-                        return val;
+                    // if(depth != 0 && val == COMPUTER)
+                    //     return val;
                     if(depth == 0 && val == COMPUTER)
-                        winMoves.push_back(make_pair(compX,compY));
+                        winMoves.push_back(make_pair(i/3,i%3));
                     if(depth == 0 && val == DRAW)
-                        drawMoves.push_back(make_pair(compX,compY));
+                        drawMoves.push_back(make_pair(i/3,i%3));
                 }
         }
         return bestValue;
@@ -111,8 +111,8 @@ int minMaxAlgo(int depth,int spaceNum,int *head,bool computer)
                         compY = i%3;
                     }
                     head[i] = SPACE;
-                    if(depth != 0 && val == PLAYER)
-                        return val;
+                    // if(depth != 0 && val == PLAYER)
+                    //     return val;
                 }
         }
         return bestValue;
